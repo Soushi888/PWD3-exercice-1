@@ -78,10 +78,10 @@ class Bibliotheque
         foreach ($this->livres as $livreDejaEnregistre) {
             if ($livre == $livreDejaEnregistre) :
                 var_dump($livreDejaEnregistre);
-                unset($livreDejaEnregistre);
-                return true; ?>
+                unset($livreDejaEnregistre); ?>
                 <p class="succes">Supression bien effectuée !</p>
-        <?php else :
+<?php return true;
+            else :
                 return false;
             endif;
         }

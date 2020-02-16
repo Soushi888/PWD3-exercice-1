@@ -15,17 +15,13 @@ $i = 0;
 foreach ($listeLivres as $l) {
     if (is_int($l["annee"])) {
         $livres[$i] = new Livre($l["titre"], $l["auteur"], $l["annee"]);
-?>
 
-        <pre><?= var_dump($livres[$i]) ?></pre>
-
-<?php
         if ($livres[$i] !== null) {
+            echo "<br>" . $l["titre"] . "<br>" . $l["auteur"] . "<br>" . $l["annee"] . "<br>"; 
             $bibliotheque->ajouterLivre($livres[$i]);
             echo "<hr>";
         }
     }
-    // echo "<br>" . $l["titre"] . "<br>" . $l["auteur"] . "<br>" . $l["annee"] . "<br>"; 
 
     $i++;
 }
@@ -45,7 +41,7 @@ foreach ($listeLivres as $l) {
 
 <body>
     <p> <?= $livres[12]->getTitre(); ?></p>
-    <?php $bibliotheque->supprimerLivre($livres[2]) ?>
+    <?php var_dump($bibliotheque->supprimerLivre($livres[12])) ?>
     <pre><?= var_dump($bibliotheque) ?></pre>
 
 </body>
