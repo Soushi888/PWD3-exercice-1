@@ -7,9 +7,13 @@ namespace PWD3;
  */
 class Bibliotheque
 {
-    private $livres;
+    /**
+     * @var array tableau d'objets Livre
+     */
+    private $livres = [];
 
     /**
+     * getLivres
      * @return array Liste de tout les livres de la bibliothèque.
      */
     public function getLivres()
@@ -18,6 +22,7 @@ class Bibliotheque
     }
 
     /**
+     * rechercheAnneePublication
      * @param integer $anneePublication
      * 
      * @return array tableau d'objets Livre
@@ -36,22 +41,49 @@ class Bibliotheque
     }
 
     /**
+     * ajouterLivre
+     * Ajoute un objet Livre dans $this->livres
      * @param object $livre
      * 
      * @return bool
      */
     public function ajouterLivre(object $livre)
     {
-        # code...
+        $err = 0;
+
+        foreach ($this->livres as $livreDejaEnregistre) {
+            if ($livre == $livreDejaEnregistre) {
+                $err++;
+            }
+        }
+
+        if ($err == 0) :
+            $this->livres[] = $livre; ?>
+            <p class="succes">Livre bien enregistré !</p>
+        <?php return true;
+        else : ?>
+            <p class="erreur">Livre déjà enregistré.</p>
+            <?php return false;
+        endif;
     }
 
     /**
+     * Supprime un objet Livre de $this->livres
      * @param object $livre
      * 
      * @return bool
      */
     function supprimerLivre(object $livre)
     {
-        # code...
+        foreach ($this->livres as $livreDejaEnregistre) {
+            if ($livre == $livreDejaEnregistre) :
+                var_dump($livreDejaEnregistre);
+                unset($livreDejaEnregistre);
+                return true; ?>
+                <p class="succes">Supression bien effectuée !</p>
+        <?php else :
+                return false;
+            endif;
+        }
     }
 }
