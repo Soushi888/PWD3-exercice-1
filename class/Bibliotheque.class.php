@@ -63,7 +63,7 @@ class Bibliotheque
         <?php return true;
         else : ?>
             <p class="erreur">Livre déjà enregistré.</p>
-            <?php return false;
+        <?php return false;
         endif;
     }
 
@@ -75,15 +75,15 @@ class Bibliotheque
      */
     function supprimerLivre(object $livre)
     {
-        foreach ($this->livres as $livreDejaEnregistre) {
-            if ($livre == $livreDejaEnregistre) :
-                var_dump($livreDejaEnregistre);
-                unset($livreDejaEnregistre); ?>
+        $i = 0;
+        foreach ($this->livres as $livreDejaEnregistre) : ?>
+            <?php if ($livre == $livreDejaEnregistre) :
+                unset($this->livres[$i]); ?>
                 <p class="succes">Supression bien effectuée !</p>
 <?php return true;
-            else :
-                return false;
             endif;
-        }
+            $i++;
+        endforeach;
+        return false;
     }
 }

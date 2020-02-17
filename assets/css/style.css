@@ -5,3 +5,12 @@
 .succes {
     color: green;
 }
+
+.souligne {
+    text-decoration: underline;
+}
+
+.boite {
+    display: inline-block;
+    border: black 2px solid;
+}
