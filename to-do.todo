@@ -1,3 +1,7 @@
-✔ Commenter index.php @done (2020-02-18 03 h 21 min 01 s)
-✔ Recherche par Titre Contient @done (2020-02-18 04 h 04 min 00 s)
-☐ Ajouter un Livre
+Principal :
+    ✔ Commenter index.php @done (2020-02-18 03 h 21 min 01 s)
+    ✔ Recherche par Titre Contient @done (2020-02-18 04 h 04 min 00 s)
+    ✔ Ajouter un Livre @done (2020-02-18 04 h 26 min 18 s)
+
+Bonus :
+    ☐ Sauvegarder les objets dans la variable $_SESSION

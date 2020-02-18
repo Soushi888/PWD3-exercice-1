@@ -14,3 +14,7 @@
     display: inline-block;
     border: black 2px solid;
 }
+
+.enregistrement p {
+    display: inline-block;
+}

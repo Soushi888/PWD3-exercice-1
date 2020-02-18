@@ -87,10 +87,10 @@ class Bibliotheque
 
         if ($err == 0) :
             $this->livres[] = $livre; ?>
-            <!-- <p class="succes">Livre bien enregistré !</p> -->
+            <p class="succes">Livre bien enregistré !</p>
         <?php return true;
         else : ?>
-            <!-- <p class="erreur">Livre déjà enregistré.</p> -->
+            <p class="erreur">Livre déjà enregistré.</p>
         <?php return false;
         endif;
     }
