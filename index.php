@@ -25,7 +25,6 @@ $bibliotheque = new Bibliotheque;
 
 <body>
     <h1>Bibliothèque</h1>
-    <h2>Enregistrement des livres</h2>
     <?php
     // Enregistrement des livres dans la bibliothèque
     $i = 0;
@@ -33,25 +32,57 @@ $bibliotheque = new Bibliotheque;
         if (is_int($l["annee"])) :
             $livres[$i] = new Livre($l["titre"], $l["auteur"], $l["annee"]);
 
-            if ($livres[$i] !== null) : ?>
-                <div class="boite">
-                    <p><?= $l["titre"] ?></p>
-                    <p><?= $l["auteur"] ?></p>
-                    <p><?= $l["annee"] ?></p>
-                    <?php $bibliotheque->ajouterLivre($livres[$i]); ?>
-                </div>
-    <?php endif;
+            if ($livres[$i] !== null) :
+                $bibliotheque->ajouterLivre($livres[$i]);
+            endif;
         endif;
         $i++;
     endforeach; ?>
     <hr>
 
+    <!-- Formulaires de recherche de Livres -->
     <h2>Livres de la bibliothèque</h2>
     <form action="" method="POST">
-        <input type="submit" name="voirLivres" value="Voir les livres">
+        <label for="annee">
+            Recherche par année de publication : <input type="number" id="annee" name="annee">
+        </label>
+        <input type="submit" name="rechercheAnnee" value="Rechercher">
     </form>
-    <?php if (isset($_POST["voirLivres"])) :
-        $i = 0;
+    <form action="" method="POST">
+        <label for="titre">
+            Recherche par Titre : <input type="text" id="titre" name="titre">
+        </label>
+        <input type="submit" name="rechercheTitre" value="Rechercher">
+    </form>
+    <form action="" method="POST">
+        <input type="submit" name="voirLivres" value="Voir tout les livres">
+    </form>
+    <?php
+    // Si on recherche par année
+    if (isset($_POST["rechercheAnnee"])) :
+        if ($_POST["annee"] == "") $_POST["annee"] = 0;
+        foreach ($bibliotheque->rechercheAnneePublication($_POST["annee"]) as $livre) : ?>
+            <div class="boite">
+                <p><?= $livre->getTitre() ?></p>
+                <p><?= $livre->getAuteur() ?></p>
+                <p><?= $livre->getAnneePublication() ?></p>
+            </div>
+        <?php endforeach;
+    endif;
+
+    // Si on recherche par titre
+    if (isset($_POST["rechercheTitre"])) :
+        foreach ($bibliotheque->rechercheTitreContient($_POST["titre"]) as $livre) : ?>
+            <div class="boite">
+                <p><?= $livre->getTitre() ?></p>
+                <p><?= $livre->getAuteur() ?></p>
+                <p><?= $livre->getAnneePublication() ?></p>
+            </div>
+        <?php endforeach;
+    endif;
+
+    // Si on veut afficher tout les Livres
+    if (isset($_POST["voirLivres"])) :
         foreach ($bibliotheque->getLivres() as $livre) : ?>
             <div class="boite">
                 <p><?= $livre->getTitre() ?></p>
@@ -61,6 +92,8 @@ $bibliotheque = new Bibliotheque;
     <?php endforeach;
     endif; ?>
     <hr>
+
+    <!-- Suppresion de livre -->
     <h2>Supprimer un livre</h2>
     <form action="" method="POST">
         <label for="livre">Livre à supprimmer
@@ -75,11 +108,24 @@ $bibliotheque = new Bibliotheque;
         </label>
         <input type="submit" name="supprimmer" value="Supprimer">
     </form>
-    <pre><?= var_dump($_POST); ?></pre>
-    <?php 
-    
+    <?php
+    // Si on a cliquer sur sur le boutton Supprimmer
     if (isset($_POST["supprimmer"])) {
-        echo "Hello !";
+        $i = 0;
+        foreach ($bibliotheque->getLivres() as $livre) {
+            if ($i == $_POST['livre']) {
+                $bibliotheque->supprimerLivre($livre);
+            }
+            $i++;
+        }
+
+        foreach ($bibliotheque->getLivres() as $livre) : ?>
+            <div class="boite">
+                <p><?= $livre->getTitre() ?></p>
+                <p><?= $livre->getAuteur() ?></p>
+                <p><?= $livre->getAnneePublication() ?></p>
+            </div>
+    <?php endforeach;
     } ?>
     <hr>
 </body>

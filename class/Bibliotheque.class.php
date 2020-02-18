@@ -27,17 +27,45 @@ class Bibliotheque
      * 
      * @return array tableau d'objets Livre
      */
-    public function rechercheAnneePublication(int $anneePublication)
+    public function rechercheAnneePublication(int $anneePublication = 0)
     {
+        $livresCorrespondants = [];
+
+        if ($anneePublication == 0) : ?>
+            <p class="erreur">Veuillez faire une recherche</p>
+        <?php endif;
+
+        foreach ($this->livres as $livre) {
+            if ($livre->getAnneePublication() == $anneePublication) {
+                $livresCorrespondants[] = $livre;
+            }
+        }
+        return $livresCorrespondants;
     }
 
     /**
-     * @param string $chaine
+     * @param string $chaine string recherché parmis les titres des objets Livre
      * 
-     * @return array tableau d'objets Livre
+     * @return array tableau d'objets Livre contenant $chaine
      */
-    public function rechercheTitreContient(string $chaine)
+    public function rechercheTitreContient(string $chaine = "")
     {
+        $livresCorrespondants = [];
+
+        if ($chaine == "") : ?>
+            <p class="erreur">Veuillez faire une recherche</p>
+        <?php return $livresCorrespondants;
+        endif;
+
+        $chaine = strtolower($chaine);
+
+        foreach ($this->livres as $livre) {
+            $titreLivre = strtolower($livre->getTitre());
+            if (strstr($titreLivre, $chaine)) {
+                $livresCorrespondants[] = $livre;
+            }
+        }
+        return $livresCorrespondants;
     }
 
     /**
@@ -59,10 +87,10 @@ class Bibliotheque
 
         if ($err == 0) :
             $this->livres[] = $livre; ?>
-            <p class="succes">Livre bien enregistré !</p>
+            <!-- <p class="succes">Livre bien enregistré !</p> -->
         <?php return true;
         else : ?>
-            <p class="erreur">Livre déjà enregistré.</p>
+            <!-- <p class="erreur">Livre déjà enregistré.</p> -->
         <?php return false;
         endif;
     }
@@ -79,7 +107,7 @@ class Bibliotheque
         foreach ($this->livres as $livreDejaEnregistre) : ?>
             <?php if ($livre == $livreDejaEnregistre) :
                 unset($this->livres[$i]); ?>
-                <p class="succes">Supression bien effectuée !</p>
+                <p class="succes">Supression bien effectuée du livre <?= $livre->getTitre() ?>!</p>
 <?php return true;
             endif;
             $i++;
